@@ -1,10 +1,10 @@
-# PlanIt AI — Requirements Document
+# PlanWise AI — Requirements Document
 
 ---
 
 ## Elevator Pitch
 
-PlanIt AI is an AI-powered event planning web application that helps small groups of friends and families generate creative ideas for gatherings. Users describe their event in natural language, and the system uses vector-based semantic search to recommend personalized event plans. It exists to eliminate the stress of “we don’t know what to do” and turn vague ideas into structured, actionable plans.
+PlanWise AI is an AI-powered event planning web application that helps small groups of friends and families generate creative ideas for gatherings. Users describe their event in natural language, and the system uses vector-based semantic search to recommend personalized event plans. It exists to eliminate the stress of “we don’t know what to do” and turn vague ideas into structured, actionable plans.
 
 ---
 
