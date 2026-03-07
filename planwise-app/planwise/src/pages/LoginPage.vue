@@ -9,6 +9,7 @@
       </p>
 
       <v-text-field
+        v-model="email"
         label="Email"
         placeholder="your@email.com"
         variant="outlined"
@@ -16,6 +17,7 @@
       />
 
       <v-text-field
+        v-model="password"
         label="Password"
         placeholder="Enter your password"
         variant="outlined"
@@ -27,6 +29,7 @@
         color="teal"
         size="large"
         class="mt-4"
+        @click="submit"
       >
         Login
       </v-btn>
@@ -46,6 +49,24 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const auth = useAuth()
+
+const email = ref('')
+const password = ref('')
+
+const submit = async () => {
+  try {
+    await auth.login(email.value, password.value)
+    router.push('/dashboard')
+  } catch {
+    alert('Invalid login')
+  }
+}
 </script>
 
 <style scoped>

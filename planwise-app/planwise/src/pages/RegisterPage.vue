@@ -10,6 +10,7 @@
       </p>
 
       <v-text-field
+        v-model="name"
         label="Name"
         placeholder="Your full name"
         variant="outlined"
@@ -17,12 +18,14 @@
       />
 
       <v-text-field
+        v-model="email"
         label="Email"
         placeholder="your@email.com"
         variant="outlined"
       />
 
       <v-text-field
+        v-model="password"
         label="Password"
         placeholder="Create a password"
         type="password"
@@ -30,6 +33,7 @@
       />
 
       <v-text-field
+        v-model="confirmPassword"
         label="Confirm Password"
         placeholder="Confirm your password"
         type="password"
@@ -41,6 +45,7 @@
         color="teal"
         size="large"
         class="mt-4"
+        @click="submit"
       >
         Create Account
       </v-btn>
@@ -60,6 +65,31 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const auth = useAuth()
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+const submit = async () => {
+  if (password.value !== confirmPassword.value) {
+    alert('Passwords do not match')
+    return
+  }
+
+  try {
+    await auth.register(name.value, email.value, password.value)
+    router.push('/login')
+  } catch {
+    alert('Register failed')
+  }
+}
 </script>
 
 <style scoped>
