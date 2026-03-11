@@ -2,8 +2,47 @@ import { ref, computed } from "vue"
 
 const accessToken = ref("")
 const roles = ref<string[]>([])
+const TOKEN_KEY = "token"
 
 const API = "http://localhost:5080"
+
+function parseJwt(token: string) {
+  const base64Url = token.split(".")[1]
+  if (!base64Url)
+    throw new Error("Invalid JWT")
+
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
+  return JSON.parse(atob(base64))
+}
+
+function extractRole(payload: Record<string, unknown>) {
+  const role = payload.role
+    ?? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+
+  return typeof role === "string" ? role : ""
+}
+
+function restoreAuthState() {
+  const savedToken = localStorage.getItem(TOKEN_KEY)
+
+  if (!savedToken)
+    return
+
+  try {
+    accessToken.value = savedToken
+
+    const decoded = parseJwt(savedToken)
+    const role = extractRole(decoded)
+
+    roles.value = role ? [role] : []
+  } catch {
+    accessToken.value = ""
+    roles.value = []
+    localStorage.removeItem(TOKEN_KEY)
+  }
+}
+
+restoreAuthState()
 
 export function useAuth() {
 
@@ -26,8 +65,11 @@ export function useAuth() {
     const data = await res.json()
 
     accessToken.value = data.accessToken
+    localStorage.setItem(TOKEN_KEY, accessToken.value)
 
-    localStorage.setItem("token", accessToken.value)
+    const decoded = parseJwt(accessToken.value)
+    const role = extractRole(decoded)
+    roles.value = role ? [role] : []
   }
 
   const register = async (name: string, email: string, password: string) => {
@@ -47,7 +89,7 @@ export function useAuth() {
   const logout = () => {
     accessToken.value = ""
     roles.value = []
-    localStorage.removeItem("token")
+    localStorage.removeItem(TOKEN_KEY)
   }
 
   const getAuthHeaders = () => ({

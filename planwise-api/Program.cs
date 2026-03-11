@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PlanWiseApi.Data;
+using PlanWiseApi.Models;
 using PlanWiseApi.Services;
 using System.Text;
 
@@ -71,6 +72,27 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    var adminExists = await db.Users.AnyAsync(u => u.Email == "admin@planwise.com");
+
+    if (!adminExists)
+    {
+        db.Users.Add(new User
+        {
+            Name = "Admin",
+            Email = "admin@planwise.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+            Role = "Admin",
+            CreatedAt = DateTime.UtcNow
+        });
+
+        await db.SaveChangesAsync();
+    }
+}
 
 
 app.Run();

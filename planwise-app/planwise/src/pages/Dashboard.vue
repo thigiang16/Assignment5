@@ -12,15 +12,23 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn variant="text" prepend-icon="mdi-heart-outline">
-          Favorites
+        <v-btn variant="text" to="/">
+          Home
+        </v-btn>
+
+        <v-btn variant="text" to="/dashboard">
+          Dashboard
         </v-btn>
 
         <v-btn variant="text" prepend-icon="mdi-account-outline">
           Profile
         </v-btn>
 
-        <v-btn variant="text" prepend-icon="mdi-logout">
+        <v-btn v-if="auth.isAdmin.value" variant="text" to="/admin">
+          Admin
+        </v-btn>
+
+        <v-btn variant="text" prepend-icon="mdi-logout" @click="handleLogout">
           Logout
         </v-btn>
 
@@ -142,8 +150,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
+import { useRouter } from "vue-router"
+import { useAuth } from "@/composables/useAuth"
 
 const prompt = ref("")
+const router = useRouter()
+const auth = useAuth()
 
 const results = ref<any[]>([])
 
@@ -193,6 +205,11 @@ function generateIdeas() {
     }
 
   ]
+}
+
+function handleLogout() {
+  auth.logout()
+  router.push("/login")
 }
 </script>
 

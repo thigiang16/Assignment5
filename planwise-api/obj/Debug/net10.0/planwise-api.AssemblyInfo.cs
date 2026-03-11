@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("planwise-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+40c11e34286d74828e088287d8df3728698e931f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70a62f6f542823242d111a4e923a57c9f901d694")]
 [assembly: System.Reflection.AssemblyProductAttribute("planwise-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("planwise-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
