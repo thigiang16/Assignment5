@@ -12,6 +12,12 @@ export interface GeneratedEventPlan {
   score: number
 }
 
+export interface ExpandPlanSuggestions {
+  musicPlaylistIdeas: string[]
+  timelineSuggestions: string[]
+  shoppingListEssentials: string[]
+}
+
 interface GenerateIdeasRequest {
   prompt: string
 }
@@ -32,4 +38,17 @@ export async function savePlan(title: string) {
   await api.post("/api/ai/save-plan", {
     title
   })
+}
+
+export async function expandPlan(
+  planId: string,
+  title: string,
+  description: string
+): Promise<ExpandPlanSuggestions> {
+  const response = await api.post<ExpandPlanSuggestions>(`/api/plans/${encodeURIComponent(planId)}/expand`, {
+    title,
+    description
+  })
+
+  return response.data
 }

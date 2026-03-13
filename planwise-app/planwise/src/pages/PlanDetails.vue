@@ -79,6 +79,19 @@
               >
                 {{ plan.saved ? "❤ Saved to Favorites" : "♡ Save to Favorites" }}
               </v-btn>
+
+              <v-btn
+                block
+                color="teal"
+                variant="outlined"
+                size="large"
+                :loading="loadingAI"
+                :disabled="loadingAI"
+                @click="expandPlan"
+              >
+                Expand This Plan
+              </v-btn>
+              
             </v-card>
 
             <v-card class="side-card pa-5" rounded="xl" elevation="2">
@@ -106,6 +119,42 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <v-card v-if="loadingAI || aiSuggestions || aiError" class="detail-card pa-6 mt-4" rounded="xl" elevation="2">
+          <div class="section-title mb-4">
+            <v-icon color="teal" class="mr-2">mdi-robot-outline</v-icon>
+            <span>AI-Enhanced Suggestions</span>
+          </div>
+
+          <p v-if="loadingAI" class="subtitle mb-0">Generating suggestions...</p>
+
+          <v-alert v-else-if="aiError" type="error" variant="tonal" class="mb-0">
+            {{ aiError }}
+          </v-alert>
+
+          <div v-else-if="aiSuggestions" class="ai-sections">
+            <div class="ai-section">
+              <h3>Music Playlist Ideas</h3>
+              <ul class="detail-list">
+                <li v-for="item in aiSuggestions.musicPlaylistIdeas" :key="`music-${item}`">{{ item }}</li>
+              </ul>
+            </div>
+
+            <div class="ai-section">
+              <h3>Timeline Suggestions</h3>
+              <ul class="detail-list">
+                <li v-for="item in aiSuggestions.timelineSuggestions" :key="`timeline-${item}`">{{ item }}</li>
+              </ul>
+            </div>
+
+            <div class="ai-section">
+              <h3>Shopping List Essentials</h3>
+              <ul class="detail-list">
+                <li v-for="item in aiSuggestions.shoppingListEssentials" :key="`shop-${item}`">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+        </v-card>
       </v-container>
 
       <v-container v-else-if="isLoading" class="plan-page py-8">
@@ -127,7 +176,13 @@
 import { ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useEventSearchState } from "@/composables/useEventSearchState"
-import { aiService, savePlan, type GeneratedEventPlan } from "@/services/aiService"
+import {
+  aiService,
+  expandPlan as expandPlanApi,
+  savePlan,
+  type ExpandPlanSuggestions,
+  type GeneratedEventPlan
+} from "@/services/aiService"
 
 type PlanDetailsModel = GeneratedEventPlan & {
   saved?: boolean
@@ -143,6 +198,31 @@ const rawSavedPlan = savedPlan ? JSON.parse(savedPlan) : null
 const rawPlan = getEventById(routeId) || rawSavedPlan || history.state.plan
 const plan = ref<PlanDetailsModel | null>(normalizePlan(rawPlan))
 const isLoading = ref(false)
+const aiSuggestions = ref<ExpandPlanSuggestions | null>(null)
+const aiError = ref("")
+const loadingAI = ref(false)
+
+const expandPlan = async () => {
+  if (!plan.value)
+    return
+
+  loadingAI.value = true
+  aiError.value = ""
+
+  try {
+    const planId = routeId || plan.value.title
+
+    aiSuggestions.value = await expandPlanApi(
+      planId,
+      plan.value.title,
+      plan.value.description
+    )
+  } catch {
+    aiError.value = "We could not generate AI suggestions right now. Please try again."
+  }
+
+  loadingAI.value = false
+}
 
 function normalizeList(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -321,6 +401,18 @@ async function toggleFavorite() {
 
 .label {
   color: #64748b;
+}
+
+.ai-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.ai-section h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #0f172a;
 }
 
 @media (max-width: 640px) {
