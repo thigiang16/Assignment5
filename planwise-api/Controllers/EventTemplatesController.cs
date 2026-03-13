@@ -21,7 +21,6 @@ namespace PlanWiseApi.Controllers
             _templateIndexService = templateIndexService;
         }
 
-        // GET: api/eventtemplates
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +31,6 @@ namespace PlanWiseApi.Controllers
             return Ok(templates);
         }
 
-        // GET: api/eventtemplates/{id}
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -46,7 +44,6 @@ namespace PlanWiseApi.Controllers
             return Ok(template);
         }
 
-        // POST: api/eventtemplates
         [HttpPost]
         public async Task<IActionResult> Create(EventTemplate template)
         {
@@ -55,13 +52,11 @@ namespace PlanWiseApi.Controllers
             _context.EventTemplates.Add(template);
             await _context.SaveChangesAsync();
 
-            // Index template for AI search
             await _templateIndexService.IndexTemplateAsync(template);
 
             return CreatedAtAction(nameof(GetById), new { id = template.Id }, template);
         }
 
-        // PUT: api/eventtemplates/{id}
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, EventTemplate template)
         {
@@ -80,13 +75,11 @@ namespace PlanWiseApi.Controllers
             _context.Entry(template).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            // Re-index updated template
             await _templateIndexService.IndexTemplateAsync(template);
 
             return NoContent();
         }
 
-        // DELETE: api/eventtemplates/{id}
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

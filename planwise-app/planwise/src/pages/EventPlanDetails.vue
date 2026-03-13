@@ -2,7 +2,6 @@
   <Navbar />
 
   <div class="page-container">
-    <!-- your existing content -->
   </div>
 </template>
 

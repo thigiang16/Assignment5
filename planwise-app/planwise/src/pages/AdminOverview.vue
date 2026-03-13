@@ -1,7 +1,5 @@
 <template>
   <v-container class="overview-page">
-
-    <!-- HEADER -->
     <div class="mb-6 heading-wrap">
       <h1 class="text-h4">Dashboard</h1>
       <p class="text-body-2 text-medium-emphasis">
@@ -9,10 +7,7 @@
       </p>
     </div>
 
-    <!-- STATS -->
     <v-row class="mb-6">
-
-      <!-- TOTAL TEMPLATES -->
       <v-col cols="12" md="6">
         <v-card class="pa-4 d-flex align-center stat-card" rounded="xl" elevation="3">
 
@@ -30,7 +25,6 @@
         </v-card>
       </v-col>
 
-      <!-- TOTAL CATEGORIES -->
       <v-col cols="12" md="6">
         <v-card class="pa-4 d-flex align-center stat-card" rounded="xl" elevation="3">
 
@@ -50,7 +44,6 @@
 
     </v-row>
 
-    <!-- CATEGORIES -->
     <v-card class="mb-6 pa-4 section-card" rounded="xl" elevation="3">
 
       <div class="text-subtitle-1 mb-3">
@@ -70,7 +63,6 @@
 
     </v-card>
 
-    <!-- RECENT TEMPLATES -->
     <v-card class="pa-4 section-card" rounded="xl" elevation="3">
 
       <div class="text-subtitle-1 mb-3">

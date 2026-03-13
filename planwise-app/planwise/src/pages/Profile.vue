@@ -1,13 +1,12 @@
 <template>
   <v-main>
-      <v-container class="profile-page py-8">
+  <v-container class="profile-page py-8">
 
         <div class="heading-wrap mb-6">
           <h1 class="text-h4">My Profile</h1>
           <p class="subtitle">Your account info and activity in one place.</p>
         </div>
 
-        <!-- USER INFO -->
         <v-card class="pa-6 mb-6 section-card account-card" rounded="xl" elevation="3">
           <h2 class="text-h6 mb-4">Account Information</h2>
 
@@ -17,7 +16,6 @@
           </div>
         </v-card>
 
-        <!-- SAVED PLANS -->
         <v-card class="pa-6 mb-6 section-card saved-card" rounded="xl" elevation="3">
           <h2 class="text-h6 mb-4">Saved Plans</h2>
 
@@ -43,7 +41,6 @@
           </p>
         </v-card>
 
-        <!-- RECENT SEARCHES -->
         <v-card class="pa-6 section-card search-card" rounded="xl" elevation="3">
           <h2 class="text-h6 mb-4">Recent Searches</h2>
 
@@ -62,12 +59,12 @@
           </p>
         </v-card>
 
-      </v-container>
-    </v-main>
+    </v-container>
+  </v-main>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
+import { onMounted, ref } from "vue"
 import { useAuth } from "@/composables/useAuth"
 import {
   getRecentSearches,

@@ -71,7 +71,7 @@ namespace PlanWiseApi.Services
 
         private static string BuildPrompt(string title, string description)
         {
-                        return $@"Expand this event plan with practical, specific ideas.
+            return $@"Expand this event plan with practical, specific ideas.
 
 Event Title:
 {title}

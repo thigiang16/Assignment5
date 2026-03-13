@@ -120,7 +120,6 @@ if (!app.Environment.IsDevelopment())
 }
 else if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ASPNETCORE_HTTPS_PORT")))
 {
-    // In Development, only redirect when HTTPS port is configured to avoid local warnings.
     app.UseHttpsRedirection();
 }
 
@@ -148,7 +147,6 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        // Apply all pending migrations at startup to avoid missing table errors.
         await db.Database.MigrateAsync();
 
         var adminExists = await db.Users.AnyAsync(u => u.Email == "admin@planwise.com");
@@ -203,7 +201,6 @@ using (var scope = app.Services.CreateScope())
         }
         catch (Exception ex)
         {
-            // Keep API online for auth/core endpoints even if search init fails.
             logger.LogError(ex, "Azure AI Search index initialization failed.");
         }
     }

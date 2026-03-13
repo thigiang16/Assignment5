@@ -1,7 +1,5 @@
 <template>
   <div class="landing">
-
-    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
     <section class="hero">
       <div class="blob blob1"></div>
       <div class="blob blob2"></div>
@@ -17,7 +15,6 @@
           themes, food, activities, decorations, and more.
         </p>
 
-        <!-- AI PROMPT BAR -->
         <div class="prompt-bar" :class="{ 'prompt-bar--focused': promptFocused }">
           <v-icon class="prompt-icon" color="rgba(255,255,255,0.5)">mdi-magnify</v-icon>
           <input
@@ -33,7 +30,6 @@
           </button>
         </div>
 
-        <!-- QUICK CHIPS -->
         <div class="hero-chips">
           <span class="chips-label">Try:</span>
           <button
@@ -48,7 +44,6 @@
       </v-container>
     </section>
 
-    <!-- PREVIEW MODAL -->
     <transition name="fade-slide">
       <div v-if="showPreview" class="preview-area">
         <div class="preview-backdrop" @click="showPreview = false"></div>
@@ -77,7 +72,6 @@
       </div>
     </transition>
 
-    <!-- ══════════════════════════ FEATURES SECTION ══════════════════════════ -->
     <section class="features-section">
       <v-container>
         <div class="section-eyebrow">Why PlanWise AI</div>
@@ -95,7 +89,6 @@
       </v-container>
     </section>
 
-    <!-- ══════════════════════════ HOW IT WORKS ══════════════════════════ -->
     <section class="how-section">
       <v-container>
         <div class="section-eyebrow">How It Works</div>
@@ -114,7 +107,6 @@
       </v-container>
     </section>
 
-    <!-- ══════════════════════════ INSPIRATION ══════════════════════════ -->
     <section class="inspiration-section">
       <v-container>
         <div class="section-eyebrow">Need inspiration?</div>
@@ -135,7 +127,6 @@
       </v-container>
     </section>
 
-    <!-- ══════════════════════════ CTA SECTION ══════════════════════════ -->
     <section class="cta-section">
       <div class="cta-blob cta-blob1"></div>
       <div class="cta-blob cta-blob2"></div>
@@ -264,14 +255,12 @@ function goFillPrompt(text: string) {
 </script>
 
 <style scoped>
-/* ─── BASE ─────────────────────────────────────────────────────────────────── */
 .landing {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   background: #ffffff;
 }
 
-/* ─── HERO ──────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -280,10 +269,9 @@ function goFillPrompt(text: string) {
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
-  padding-top: 80px; /* clear the fixed navbar */
+  padding-top: 80px; 
 }
 
-/* animated gradient blobs */
 .blob {
   position: absolute;
   border-radius: 50%;
@@ -316,7 +304,6 @@ function goFillPrompt(text: string) {
   to   { transform: translate(30px, -30px) scale(1.06); }
 }
 
-/* hero content */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -454,7 +441,6 @@ function goFillPrompt(text: string) {
   color: #99f6e4;
 }
 
-/* ─── PREVIEW MODAL ─────────────────────────────────────────────────────────── */
 .preview-area {
   position: fixed;
   inset: 0;
@@ -515,7 +501,6 @@ function goFillPrompt(text: string) {
   justify-content: center;
 }
 
-/* ─── SHARED SECTION STYLES ─────────────────────────────────────────────────── */
 .section-eyebrow {
   font-size: 13px;
   font-weight: 700;
@@ -533,7 +518,6 @@ function goFillPrompt(text: string) {
   line-height: 1.2;
 }
 
-/* ─── FEATURES SECTION ───────────────────────────────────────────────────────── */
 .features-section {
   padding: 96px 0;
   background: #ffffff;
@@ -582,7 +566,6 @@ function goFillPrompt(text: string) {
   margin: 0;
 }
 
-/* ─── HOW IT WORKS ───────────────────────────────────────────────────────────── */
 .how-section {
   padding: 96px 0;
   background: #f8fafc;
@@ -643,7 +626,6 @@ function goFillPrompt(text: string) {
   margin: 0;
 }
 
-/* ─── INSPIRATION SECTION ───────────────────────────────────────────────────── */
 .inspiration-section {
   padding: 96px 0;
   background: #ffffff;
@@ -690,7 +672,6 @@ function goFillPrompt(text: string) {
 }
 .inspiration-card:hover .insp-hint { opacity: 1; }
 
-/* ─── CTA SECTION ───────────────────────────────────────────────────────────── */
 .cta-section {
   position: relative;
   padding: 100px 0;
@@ -742,7 +723,6 @@ function goFillPrompt(text: string) {
 .cta-secondary { color: white !important; border-color: rgba(255,255,255,0.3) !important; padding-inline: 32px !important; }
 .cta-secondary:hover { background: rgba(255,255,255,0.08) !important; }
 
-/* ─── TRANSITIONS ───────────────────────────────────────────────────────────── */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -753,7 +733,6 @@ function goFillPrompt(text: string) {
   transform: translateY(10px);
 }
 
-/* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 960px) {
   .features-grid,
   .steps-grid {

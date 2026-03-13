@@ -16,10 +16,6 @@ namespace PlanWiseApi.Services
             _httpClient = httpClientFactory.CreateClient();
         }
 
-        /// <summary>
-        /// Creates an embedding vector from a plain text string.
-        /// Used for user queries.
-        /// </summary>
         public async Task<float[]> VectorizeTextAsync(string text)
         {
             var endpoint = _config.Endpoint.TrimEnd('/');
@@ -57,9 +53,6 @@ namespace PlanWiseApi.Services
             return vector;
         }
 
-        /// <summary>
-        /// Creates an embedding for an EventTemplate by combining important fields.
-        /// </summary>
         public async Task<float[]> VectorizeEventTemplateAsync(EventTemplate template)
         {
             var combinedText = $"""

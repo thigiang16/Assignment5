@@ -18,7 +18,6 @@ namespace PlanWiseApi.Services
 
         public async Task IndexTemplateAsync(EventTemplate template)
         {
-             Console.WriteLine("Indexing template: " + template.Title);
             var content =
                 $"{template.Title} {template.Description} {template.Tags}";
 
@@ -41,11 +40,7 @@ namespace PlanWiseApi.Services
                 ContentText = content,
                 ContentVector = vector
             };
-            Console.WriteLine("Uploading to Azure Search...");
-            Console.WriteLine("Vector length: " + vector.Length);
             await _searchService.UploadTemplateAsync(doc);
-            Console.WriteLine("Template uploaded successfully.");
-
         }
     }
 }

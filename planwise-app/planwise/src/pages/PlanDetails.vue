@@ -1,9 +1,9 @@
 <template>
   <v-main>
-      <v-container v-if="plan" class="plan-page py-8">
-        <v-btn variant="text" class="back-btn mb-4" prepend-icon="mdi-arrow-left" @click="router.back()">
-          Back to Results
-        </v-btn>
+    <v-container v-if="plan" class="plan-page py-8">
+      <v-btn variant="text" class="back-btn mb-4" prepend-icon="mdi-arrow-left" @click="router.back()">
+        Back to Results
+      </v-btn>
 
         <v-row>
           <v-col cols="12" md="8">
@@ -71,12 +71,7 @@
                 <span>Actions</span>
               </div>
 
-              <v-btn
-                block
-                color="teal"
-                size="large"
-                @click="toggleFavorite"
-              >
+              <v-btn block color="teal" size="large" @click="toggleFavorite">
                 {{ plan.saved ? "❤ Saved to Favorites" : "♡ Save to Favorites" }}
               </v-btn>
 
@@ -91,7 +86,6 @@
               >
                 Expand This Plan
               </v-btn>
-              
             </v-card>
 
             <v-card class="side-card pa-5" rounded="xl" elevation="2">
@@ -155,20 +149,20 @@
             </div>
           </div>
         </v-card>
-      </v-container>
+    </v-container>
 
-      <v-container v-else-if="isLoading" class="plan-page py-8">
-        <v-card class="hero-card pa-6" rounded="xl" elevation="2">
-          <p class="subtitle mb-0">Loading plan details...</p>
-        </v-card>
-      </v-container>
+    <v-container v-else-if="isLoading" class="plan-page py-8">
+      <v-card class="hero-card pa-6" rounded="xl" elevation="2">
+        <p class="subtitle mb-0">Loading plan details...</p>
+      </v-card>
+    </v-container>
 
-      <v-container v-else class="plan-page py-8">
-        <v-card class="hero-card pa-6" rounded="xl" elevation="2">
-          <h2 class="text-h5 mb-2">Plan not found</h2>
-          <p class="subtitle mb-0">We could not load this saved plan right now.</p>
-        </v-card>
-      </v-container>
+    <v-container v-else class="plan-page py-8">
+      <v-card class="hero-card pa-6" rounded="xl" elevation="2">
+        <h2 class="text-h5 mb-2">Plan not found</h2>
+        <p class="subtitle mb-0">We could not load this saved plan right now.</p>
+      </v-card>
+    </v-container>
   </v-main>
 </template>
 
@@ -202,6 +196,13 @@ const aiSuggestions = ref<ExpandPlanSuggestions | null>(null)
 const aiError = ref("")
 const loadingAI = ref(false)
 
+function getPlanId() {
+  if (!plan.value)
+    return ""
+
+  return routeId || plan.value.title
+}
+
 const expandPlan = async () => {
   if (!plan.value)
     return
@@ -210,7 +211,7 @@ const expandPlan = async () => {
   aiError.value = ""
 
   try {
-    const planId = routeId || plan.value.title
+    const planId = getPlanId()
 
     aiSuggestions.value = await expandPlanApi(
       planId,
@@ -219,9 +220,9 @@ const expandPlan = async () => {
     )
   } catch {
     aiError.value = "We could not generate AI suggestions right now. Please try again."
+  } finally {
+    loadingAI.value = false
   }
-
-  loadingAI.value = false
 }
 
 function normalizeList(value: unknown): string[] {
