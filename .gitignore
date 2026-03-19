@@ -1,0 +1,79 @@
+############################
+# NODE / VUE
+############################
+
+node_modules/
+dist/
+dist-ssr/
+coverage/
+
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+*.local
+.DS_Store
+
+*.tsbuildinfo
+.eslintcache
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Vitest
+__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
+
+
+############################
+# ASP.NET CORE
+############################
+
+bin/
+obj/
+
+*.user
+*.lock.json
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+############################
+# BUILD OUTPUT
+############################
+
+publish/
+*.publishsettings
+
+############################
+# SECRETS / CONFIG
+############################
+
+appsettings.Development.json
+.env
+.env.local
+
+############################
+# EDITORS
+############################
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+############################
+# OS
+############################
+
+Thumbs.db
+.DS_Store
